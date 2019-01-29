@@ -9,6 +9,7 @@ defmodule ChecksumApi.Application do
   def start(_type, _args) do
     # List all child processes to be supervised
     children = [
+      {ChecksumApi.NumberStore, []},
       {Plug.Cowboy, scheme: :http, plug: ChecksumApi.Router, options: [port: 4000]}
     ]
 
