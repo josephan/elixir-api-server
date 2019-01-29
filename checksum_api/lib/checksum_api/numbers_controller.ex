@@ -1,27 +1,28 @@
 defmodule ChecksumApi.NumbersController do
   import Plug.Conn
 
-  def create(%{body_params: %{"number" => number}} = conn) when is_number(number) do
-    numbers = [1,2,3]
-    new_numbers = [number | numbers]
+  alias ChecksumApi.NumberStore
 
-    conn
-    |> json(201, %{numbers: new_numbers})
+  def create(%{body_params: %{"number" => number}} = conn) when is_number(number) do
+    {:ok, numbers} = NumberStore.add_number(number)
+
+    json(conn, 201, %{numbers: numbers})
   end
 
   def create(conn) do
-    conn
-    |> json(422, %{error: "missing or invalid number parameter"})
+    json(conn, 422, %{error: "missing or invalid number parameter"})
   end
 
   def delete(conn) do
-    conn
-    |> json(200)
+    :ok = NumberStore.clear_numbers()
+
+    json(conn, 200)
   end
 
   def checksum(conn) do
-    conn
-    |> json(200, %{checksum: 100})
+    {:ok, checksum} = NumberStore.get_checksum()
+
+    json(conn, 200, %{checksum: checksum})
   end
 
   defp json(conn, status) do
