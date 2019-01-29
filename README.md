@@ -1,12 +1,3 @@
-# Bluecode Coding Test
-
-* Name: Joseph An
-* Email: an.joseph891@gmail.com
-* Date: Jan 29, 2019
-
-Hi Bluecode, Task A is in the `checksum_api/` directory and Task B in `task_b/` directory.
-I've also added `.git` folder so you can check my commit history and see my thought process.
-
 ## Task A - Checksum API
 
 Setup:
@@ -40,6 +31,8 @@ For testing I would:
 For the timeout, inside the `NumberStore` genserver I would have wrapped the checksum calculation in a task and use [Task.yield/2](https://hexdocs.pm/elixir/Task.html#yield/2) to return `{:error, :timeout}` instead of `{:ok, checksum}` and within my controller return a `504` error.
 
 ## Task B
+
+Written in [Ruby](https://www.ruby-lang.org/en/)
 
 ```
 cd task_b
